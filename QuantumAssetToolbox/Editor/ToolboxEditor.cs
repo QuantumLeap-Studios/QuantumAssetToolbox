@@ -23,14 +23,8 @@ public class ToolboxWindow : EditorWindow
         GetWindow<ToolboxWindow>("Quantum Toolbox");
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
-        if (EditorStyles.label == null)
-        {
-            Debug.LogError("EditorStyles.label is null. Ensure Unity Editor is properly initialized.");
-            return;
-        }
-
         headerStyle = new GUIStyle(EditorStyles.label)
         {
             fontSize = 19,
@@ -107,7 +101,9 @@ public class ToolboxWindow : EditorWindow
         }
 
         GUILayout.Space(10);
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(300));
+
+        // Improved scrollable area with flexible height
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.ExpandHeight(true));
         foreach (var asset in filteredAssets)
         {
             EditorGUILayout.BeginHorizontal("box");
@@ -129,6 +125,7 @@ public class ToolboxWindow : EditorWindow
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndScrollView();
+
         EditorGUILayout.EndVertical();
     }
 
